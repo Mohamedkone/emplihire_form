@@ -48,7 +48,6 @@ const param = searchParams.get('apply');
   const [eligibility, setEligibility] = useState('');
   const [sponsorship, setSponsorship] = useState('');
   const [stdate, setStdate] = useState('');
-  const [json, setJson] = useState({});
   const today = new Date()
   const month = today.getMonth() + 1; // getMonth() returns 0-indexed values, so add 1 to get the actual month number
   const day = today.getDate();
@@ -180,7 +179,7 @@ console.error = () => {};
             skills: skills,
           });
 
-          const summaryRes = await axios.post('https://arianodelb4.herokuapp.com/summarize', {
+          await axios.post('https://arianodelb4.herokuapp.com/summarize', {
             filename: res.data[0],
             parsed: res.data[1],
           }).then(async(res)=>{
