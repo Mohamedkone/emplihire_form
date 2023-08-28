@@ -78,7 +78,7 @@ const param = searchParams.get('apply');
 console.error = () => {}; 
     async function fetchData() {
       try {
-        const check = await axios.get(`http://localhost:3001/jobs/${param}`);
+        const check = await axios.get(`https://arianodelb4.herokuapp.com/jobs/${param}`);
         setSkills(check.data.json)
       } catch (error) {
         if (error.response && error.response.status === 404) {
