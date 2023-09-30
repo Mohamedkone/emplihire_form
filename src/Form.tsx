@@ -32,7 +32,9 @@ export default function multistep() {
 const searchParams = new URLSearchParams(queryString);
 
 // Retrieve the value of a specific parameter
-const param = searchParams.get('apply');
+const paramJob = searchParams.get('apply');
+const paramComp = searchParams.get('c');
+console.log(searchParams.get('c'))
 
   const [status, setStatus] = useState(0)
   // const [complete, setComplete] = useState(0)
@@ -78,7 +80,7 @@ const param = searchParams.get('apply');
 console.error = () => {}; 
     async function fetchData() {
       try {
-        const check = await axios.get(`https://arianodelb4.herokuapp.com/jobs/${param}`);
+        const check = await axios.get(`https://arianodelb4.herokuapp.com/jobs/${paramJob}/${paramComp}`);
         setSkills(check.data.json)
       } catch (error) {
         if (error.response && error.response.status === 404) {
@@ -186,7 +188,7 @@ console.error = () => {};
 
             
             const nodeRes = await axios.post('https://arianodelb4.herokuapp.com/applicants', {
-              "jobId": param,
+              "jobId": paramJob,
               "fname": fname,
               "mname": mname,
               "lname": lname,
