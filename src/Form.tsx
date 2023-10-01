@@ -34,7 +34,6 @@ const searchParams = new URLSearchParams(queryString);
 // Retrieve the value of a specific parameter
 const paramJob = searchParams.get('apply');
 const paramComp = searchParams.get('c');
-console.log(searchParams.get('c'))
 
   const [status, setStatus] = useState(0)
   // const [complete, setComplete] = useState(0)
@@ -159,8 +158,6 @@ console.error = () => {};
     if (isValid) {
       // If all fields are valid, submit the form or perform any additional actions
       setStatus(1)
-      console.log(fname,lname,email,number,country,region,city,zip,eligibility,sponsorship,stdate,selectedFile)
-      console.log(new Date(stdate))
       sendApp()
     }
   };
