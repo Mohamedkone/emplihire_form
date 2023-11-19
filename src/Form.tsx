@@ -35,7 +35,7 @@ const searchParams = new URLSearchParams(queryString);
 const paramJob = searchParams.get('apply');
 const paramComp = searchParams.get('c');
 
-  const [status, setStatus] = useState(0)
+  const [status, setStatus] = useState(1)
   // const [complete, setComplete] = useState(0)
   const [fname, setfname] = useState('')
   const [mname, setmname] = useState('')
@@ -75,12 +75,17 @@ const paramComp = searchParams.get('c');
   const [ skills, setSkills ] = useState({})
 
   useEffect(()=>{
+    if(paramComp === null || paramJob === null){
+      setStatus(3);
+    }
+    else{
     const originalConsoleError = console.error;
-console.error = () => {}; 
+    console.error = () => {}; 
     async function fetchData() {
       try {
         const check = await axios.get(`https://arianodelb4.herokuapp.com/jobs/${paramJob}/${paramComp}`);
         setSkills(check.data.json)
+        setStatus(0)
       } catch (error) {
         if (error.response && error.response.status === 404) {
           setStatus(3);
@@ -89,11 +94,11 @@ console.error = () => {};
         console.error = originalConsoleError; // Restore console.error
       }
     }
-    
     fetchData();
+  }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
-
+  console.log(status)
   const handleSubmit = () => {
     let isValid = true;
 
@@ -299,7 +304,7 @@ console.error = () => {};
         {/* Start Main form code */}
 
         <Heading w="100%" my={5} textAlign={'center'} fontWeight="normal">
-        Info
+        Application Form
       </Heading>
 
       <Flex>
@@ -340,10 +345,6 @@ console.error = () => {};
         <PhoneInput placeholder='+x xxxxxxxxxx' country={'us'} value={number} onChange={(e)=>setNumber(e)} />
         {errors.number && <Text color="red">{errors.number}</Text>}
       </FormControl>
-      
-      <Heading w="100%" my={5} textAlign={'center'} fontWeight="normal" mb="2%">
-        Details
-      </Heading>
       <FormControl as={GridItem} colSpan={[6, 3]}>
         <FormLabel
           htmlFor="country"
@@ -446,9 +447,6 @@ console.error = () => {};
           {errors.zip && <Text color="red">{errors.zip}</Text>}
       </FormControl>
 
-      <Heading w="100%" my={5} textAlign={'center'} fontWeight="normal" mb="2%">
-        Residency
-      </Heading>
       <FormControl mt="2%">
         <FormLabel htmlFor="email" fontWeight={'normal'}>
           Are You legally eligible to work in the U.S.?<span>*</span>
@@ -534,7 +532,7 @@ console.error = () => {};
       <Flex justifyContent={'center'} my={10} >
         <Button
           w="7rem"
-          colorScheme="red"
+          colorScheme="messenger"
           variant="solid"
           onClick={()=>handleSubmit()}
         >
@@ -542,6 +540,13 @@ console.error = () => {};
         </Button>
         </Flex>
       </Box>
+      <footer>
+        <p className="copywrite">Powered By Emplihire.</p>
+        <div className='footerDiv' role='note'>
+        <p>Read our</p>
+          <a href="https://www.emplihire.com/privacy-policy" target="_blank" rel='noreferrer'>Privacy policy</a>
+        </div>
+      </footer>
     </>,
     <Flex flexDir={'column'} justifyContent={'center'} alignItems={'center'} height={'100dvh'}>
     <CircularProgress isIndeterminate size={'100px'}/>
